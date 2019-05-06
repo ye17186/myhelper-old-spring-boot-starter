@@ -19,10 +19,22 @@ public class TokenProperties {
      * 是否激活Token插件
      */
     private boolean enabled;
+
+    /**
+     * 拦截url
+     */
+    private String[] pathPatterns;
+
+    /**
+     * 排除url
+     */
+    private String[] excludePathPatterns;
+
     /**
      * 基于Redis的token有效期
      */
     private long timeout;
+
     /**
      * 基于Redis的token key前缀
      */
@@ -32,6 +44,7 @@ public class TokenProperties {
      * 签名算法的密钥
      */
     private String secretKey;
+
     /**
      * 时间戳有效时间间隔，默认30s
      */

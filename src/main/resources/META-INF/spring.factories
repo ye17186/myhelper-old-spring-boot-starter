@@ -1,4 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.yclouds.myhelper.autoconfigure.MyHelperAutoConfiguration,\
-com.yclouds.myhelper.plugins.token.TokenConfiguration,\
-com.yclouds.myhelper.plugins.advice.ControllerAdviceConfiguration
+com.yclouds.myhelper.autoconfigure.MyHelperAutoConfiguration
