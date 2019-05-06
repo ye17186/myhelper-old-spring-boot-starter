@@ -37,12 +37,17 @@ public class TokenInterceptor extends BaseInterceptor {
             return true;
         }
 
+        // Token
         String token = request.getHeader(HEADER_TOKEN);
+        // 请发请求的时间戳
         String timestamp = request.getHeader(HEADER_TIMESTAMP);
+        // 随机串
         String nonce = request.getHeader(HEADER_NONCE);
+        // 签名
         String sign = request.getHeader(HEADER_SIGN);
 
-        if (StringUtils.isAnyEmpty(token, timestamp, nonce, sign)) {
+        if (StringUtils.isAnyEmpty(token, timestamp, nonce, sign) || !StringUtils
+            .isNumeric(timestamp)) {
             write(request, response, ApiResp.retFail(BaseError.SYSTEM_TOKEN_INVALID_01));
             return false;
         }
@@ -54,7 +59,7 @@ public class TokenInterceptor extends BaseInterceptor {
             return false;
         }
 
-        // 防止短时间重放
+        // 随机串存在，则说明可能是重放，此处禁止
         if (RedisUtils.get("NONCE:" + nonce) != null) {
             write(request, response, ApiResp.retFail(BaseError.SYSTEM_TOKEN_INVALID_03));
             return false;
@@ -67,6 +72,7 @@ public class TokenInterceptor extends BaseInterceptor {
             return false;
         }
 
+        // 随机串存入Redis，nonce只能被使用一次
         RedisUtils.set("NONCE:" + nonce, properties.getValidDuration());
         return true;
     }
