@@ -7,6 +7,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**
+ * SpringContext处理类，用于将上下文注册到SpringUtils中
+ *
  * @author ye17186
  * @version 2019/4/30 11:30
  */
