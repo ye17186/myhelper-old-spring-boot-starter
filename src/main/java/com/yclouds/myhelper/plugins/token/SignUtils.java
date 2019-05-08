@@ -11,14 +11,12 @@ public class SignUtils {
     private SignUtils() {
     }
 
-    private static final String key = "signKey";
-
     /**
      * 签名
      *
      * @param token token
      * @param timestamp 时间戳
-     * @param nonceStr 随机串
+     * @param nonceStr 一次性随机串
      * @param secretKey 密钥
      * @return 签名
      */
