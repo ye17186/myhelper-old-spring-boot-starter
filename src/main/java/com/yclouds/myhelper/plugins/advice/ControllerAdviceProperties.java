@@ -1,4 +1,4 @@
-package com.yclouds.myhelper.autoconfigure.properties;
+package com.yclouds.myhelper.plugins.advice;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
  */
 @Setter
 @Getter
-@ConfigurationProperties(prefix = "myhelper.plugins.advice")
+@ConfigurationProperties(prefix = "myhelper.plugins.controller-advice")
 @Component
-public class AdviceProperties {
+public class ControllerAdviceProperties {
 
     /**
      * 是否激活Controller增强插件

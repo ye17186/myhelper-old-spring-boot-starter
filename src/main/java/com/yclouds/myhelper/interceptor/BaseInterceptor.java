@@ -5,8 +5,6 @@ import com.yclouds.myhelper.web.response.ApiResp;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
@@ -14,8 +12,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
  * @version 2018/7/2 8:58
  */
 public class BaseInterceptor implements HandlerInterceptor {
-
-    protected Logger log = LoggerFactory.getLogger(getClass());
 
     protected void write(HttpServletRequest request, HttpServletResponse response, ApiResp resp)
         throws IOException {

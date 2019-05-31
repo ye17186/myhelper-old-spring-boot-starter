@@ -1,4 +1,4 @@
-package com.yclouds.myhelper.autoconfigure.properties;
+package com.yclouds.myhelper.plugins.token;
 
 import lombok.Getter;
 import lombok.Setter;

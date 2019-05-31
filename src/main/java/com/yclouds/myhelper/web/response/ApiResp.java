@@ -82,6 +82,7 @@ public class ApiResp<T> implements Serializable {
      * 有data的失败返回
      *
      * @param error 错误类型
+     * @param data 详细错误信息
      */
     public static <T> ApiResp<T> retFail(BaseError error, T data) {
         return retFail(error.getCode(), error.getMsg(), data);

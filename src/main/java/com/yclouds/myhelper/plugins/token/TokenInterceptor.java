@@ -1,6 +1,5 @@
 package com.yclouds.myhelper.plugins.token;
 
-import com.yclouds.myhelper.autoconfigure.properties.TokenProperties;
 import com.yclouds.myhelper.interceptor.BaseInterceptor;
 import com.yclouds.myhelper.utils.RedisUtils;
 import com.yclouds.myhelper.utils.StringUtils;

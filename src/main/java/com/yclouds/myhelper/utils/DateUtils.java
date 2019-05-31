@@ -1,155 +1,193 @@
 package com.yclouds.myhelper.utils;
 
-import java.time.Instant;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
+ * 基于JDK8的时间处理工具类
+ *
  * @author ye17186
- * @version 2019/2/19 16:35
+ * @version 2019/5/29 13:43
  */
 @SuppressWarnings("unused")
-public class DateUtils {
+public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
     private DateUtils() {
     }
 
-    /**
-     * 日期时间格式01：yyyy-MM-dd HH:mm:ss
-     */
-    public static final String FMT_DATETIME_01 = "yyyy-MM-dd HH:mm:ss";
+    public static final String PATTERN_DATETIME_01 = "yyyy-MM-dd HH:mm:ss";
+    public static final String PATTERN_DATETIME_02 = "yyyyMMddHHmmss";
+    public static final String PATTERN_DATE_01 = "yyyy-MM-dd";
+    public static final String PATTERN_DATE_02 = "yyyyMMdd";
+    public static final String PATTERN_TIME_01 = "HH:mm:ss";
+    public static final String PATTERN_TIME_02 = "HH:mm:ss";
+    public static final String PATTERN_MONTH_01 = "yyyy-MM";
+    public static final String PATTERN_MONTH_02 = "yyyyMM";
 
     /**
-     * 日期时间格式02：yyyyMMddHHmmss
-     */
-    public static final String FMT_DATETIME_02 = "yyyyMMddHHmmss";
-
-    /**
-     * 日期格式01：yyyy-MM-dd
-     */
-    public static final String FMT_DATE_01 = "yyyy-MM-dd";
-
-    /**
-     * 时间格式01：yyyy-MM-dd
-     */
-    public static final String FMT_TIME_01 = "HH:mm:ss";
-
-    /**
-     * LocalDateTime 日期格式化
+     * Date转LocalDateTime
      *
-     * @param dateTime 时间
-     * @return 默认格式的时间字符串
+     * @param date Date时间
+     * @return LocalDateTime时间
      */
-    public static String format(LocalDateTime dateTime) {
-        return format(dateTime, FMT_DATETIME_01);
+    public static LocalDateTime toLocalDateTime(Date date) {
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }
 
     /**
-     * LocalDateTime 日期格式化
+     * LocalDateTime转Date
      *
-     * @param dateTime 时间
-     * @param pattern 格式
-     * @return 指定格式的时间字符串
+     * @param dateTime LocalDateTime时间
+     * @return Date时间
      */
-    public static String format(LocalDateTime dateTime, String pattern) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-        return dateTime.format(formatter);
+    public static Date toDate(LocalDateTime dateTime) {
+        return Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
     /**
-     * Instant日期格式化
+     * 获取当前时间
      *
-     * @param instant Instant时间
-     * @return 默认格式的时间字符串
+     * @return 当前时间
      */
-    public static String format(Instant instant) {
-        return format(instant, FMT_DATETIME_01);
+    public static LocalDateTime getNow() {
+        return LocalDateTime.now();
     }
 
     /**
-     * Instant日期格式化
+     * 获取当前时间的yyyy-MM-dd HH:mm:ss格式的时间字符串
      *
-     * @param instant Instant时间
-     * @param pattern 日期格式
-     * @return 指定格式的时间字符串
+     * @return 当前时间字符串
      */
-    public static String format(Instant instant, String pattern) {
-        return format(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()), pattern);
+    public static String format() {
+        return format(PATTERN_DATETIME_01);
     }
 
     /**
+     * 获取dataTime时间的yyyy-MM-dd HH:mm:ss格式的时间字符串
      *
+     * @param dataTime 指定时间
+     * @return dataTime的时间字符串
      */
-    public static Date endOfDay() {
-
-        Calendar todayEnd = Calendar.getInstance();
-        todayEnd.set(Calendar.HOUR_OF_DAY, 23);
-        todayEnd.set(Calendar.MINUTE, 59);
-        todayEnd.set(Calendar.SECOND, 59);
-        todayEnd.set(Calendar.MILLISECOND, 999);
-        return todayEnd.getTime();
+    public static String format(LocalDateTime dataTime) {
+        return format(dataTime, PATTERN_DATETIME_01);
     }
 
     /**
-     * 获取当天的起始时间
-     *
-     * @return 当天起始时间
-     */
-    public static LocalDateTime startOfDay8() {
-        return startOfDay8(LocalDate.now());
-    }
-
-    /**
-     * 获取指定日期的起始时间
-     *
-     * @param localDate 指定日期
-     * @return 指定日期起始时间
-     */
-    public static LocalDateTime startOfDay8(LocalDate localDate) {
-
-        return LocalDateTime.of(localDate, LocalTime.MIN);
-    }
-
-    /**
-     * 获取当天的结束时间
-     *
-     * @return 当天结束时间
-     */
-    public static LocalDateTime endOfDay8() {
-        return endOfDay8(LocalDate.now());
-    }
-
-    /**
-     * 获取指定日期的结束时间
-     *
-     * @param localDate 指定日期
-     * @return 指定日期结束时间
-     */
-    public static LocalDateTime endOfDay8(LocalDate localDate) {
-        return LocalDateTime.of(localDate, LocalTime.MAX);
-    }
-
-    /**
-     * 获取当前时间字符串
-     *
-     * @return yyyy-MM-dd HH:mm:ss时间字符串
-     */
-    public static String now() {
-        return format(LocalDateTime.now());
-    }
-
-    /**
-     * 获取当前时间指定格式的时间字符串
+     * 获取当前时间pattern格式的字符串
      *
      * @param pattern 时间格式
-     * @return 指定格式时间字符串
+     * @return pattern格式的时间字符串
      */
-    public static String now(String pattern) {
-        return format(LocalDateTime.now(), pattern);
+    public static String format(String pattern) {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern));
+    }
+
+    /**
+     * 获取dateTime时间的pattern格式的字符串
+     *
+     * @param dateTime 指定时间
+     * @param pattern 时间格式
+     * @return pattern格式的时间字符串
+     */
+    public static String format(LocalDateTime dateTime, String pattern) {
+        return dateTime.format(DateTimeFormatter.ofPattern(pattern));
+    }
+
+    /**
+     * yyyy-MM-dd HH:mm:ss格式的时间字符串转LocalDateTime时间
+     *
+     * @param dateTimeStr 时间字符串
+     * @return 时间
+     */
+    public static LocalDateTime parse(String dateTimeStr) {
+        return LocalDateTime.parse(dateTimeStr, DateTimeFormatter.ofPattern(PATTERN_DATETIME_01));
+    }
+
+    /**
+     * 时间字符串转LocalDateTime时间
+     *
+     * @param dateTimeStr 时间字符串
+     * @param pattern 时间格式
+     * @return 时间
+     */
+    public static LocalDateTime parse(String dateTimeStr, String pattern) {
+        return LocalDateTime.parse(dateTimeStr, DateTimeFormatter.ofPattern(pattern));
+    }
+
+    /**
+     * 当天的开始时间,时分秒为00:00:00
+     *
+     * @return 当天的开始时间
+     */
+    public static LocalDateTime startOfDate() {
+        return startOfDate(LocalDate.now());
+    }
+
+    /**
+     * 指定日期的开始时间,时分秒为00:00:00
+     *
+     * @param date 指定日期
+     * @return 指定日期的开始时间
+     */
+    public static LocalDateTime startOfDate(LocalDate date) {
+        return LocalDateTime.of(date, LocalTime.MIN);
+    }
+
+
+    /**
+     * 当天的结束时间,时分秒为23:59:59
+     *
+     * @return 当天的结束时间
+     */
+    public static LocalDateTime endOfDate() {
+        return endOfDate(LocalDate.now());
+    }
+
+    /**
+     * 指定日期的结束时间，时分秒为23:59:59
+     *
+     * @param date 指定日期
+     * @return 指定日期的结束时间
+     */
+    public static LocalDateTime endOfDate(LocalDate date) {
+        return LocalDateTime.of(date, LocalTime.MAX);
+    }
+
+    /**
+     * 计算两个时间的时间差，Duration.toHour等方法，可转成具体天数、小时数等等
+     *
+     * @param start 开始时间
+     * @param end 结束时间
+     * @return 时间差
+     */
+    public static Duration between(LocalDateTime start, LocalDateTime end) {
+        return Duration.between(start, end);
+    }
+
+    /**
+     * 计算两个时间相隔的天数
+     *
+     * @param start 开始时间
+     * @param end 结束时间
+     * @return 相隔天数
+     */
+    public static long betweenByDays(LocalDateTime start, LocalDateTime end) {
+        return between(start, end).toDays();
+    }
+
+    /**
+     * 计算两个时间相隔好描述
+     *
+     * @param start 开始时间
+     * @param end 结束时间
+     * @return 相隔毫秒数
+     */
+    public static long betweenByMillis(LocalDateTime start, LocalDateTime end) {
+        return between(start, end).toMillis();
     }
 }

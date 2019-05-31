@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Import;
  * @version 2019/5/5 15:15
  */
 @Configuration
-@Import({SpringContextHandler.class, TokenConfiguration.class, ControllerAdviceConfiguration.class})
+@Import({SpringContextHandler.class,
+    TokenConfiguration.class,
+    ControllerAdviceConfiguration.class})
 public class MyHelperAutoConfiguration {
+
 }

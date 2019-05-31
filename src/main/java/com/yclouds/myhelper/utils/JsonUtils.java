@@ -30,7 +30,7 @@ public class JsonUtils {
         // 对象的所有字段全部列入，还是其他的选项，可以忽略null等
         om.setSerializationInclusion(Include.ALWAYS);
         // 设置Date类型的序列化及反序列化格式
-        om.setDateFormat(new SimpleDateFormat(DateUtils.FMT_DATETIME_01));
+        om.setDateFormat(new SimpleDateFormat(DateUtils.PATTERN_DATETIME_01));
 
         // 忽略空Bean转json的错误
         om.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);

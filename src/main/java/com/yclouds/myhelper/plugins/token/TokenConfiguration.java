@@ -1,6 +1,5 @@
 package com.yclouds.myhelper.plugins.token;
 
-import com.yclouds.myhelper.autoconfigure.properties.TokenProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
