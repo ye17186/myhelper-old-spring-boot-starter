@@ -1,8 +1,10 @@
 package com.yclouds.myhelper.plugins.advice;
 
 import com.google.common.collect.Lists;
+import com.yclouds.myhelper.exception.LogicException;
 import com.yclouds.myhelper.web.error.code.BaseError;
 import com.yclouds.myhelper.web.response.ApiResp;
+import com.yclouds.myhelper.web.valid.ValidUtils.LogicArgNoValidException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -33,28 +35,55 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ControllerAdviceConfiguration {
 
     /**
-     * 参数绑定异常或者参数检验失败异常
+     * 业务异常
      *
+     * @param request http请求
+     * @param ex 异常对象
+     */
+    @ExceptionHandler(LogicException.class)
+    @ResponseBody
+    protected ApiResp handleLogicEx(HttpServletRequest request, LogicException ex) {
+
+        log.warn("[业务异常] url={}, code={}, msg={}", request.getRequestURL(), ex.getCode(),
+            ex.getMsg());
+        return ApiResp.retFail(ex.getCode(), ex.getMessage(), ex.getDetail());
+    }
+
+
+    /**
+     * 业务参数异常
+     * <br>该异常发生于Service层等业务逻辑中，主动调用ValidUtils进行参数校验
+     *
+     * @param request 请求对象
+     * @param ex 异常对象
+     * @return 异常信息
+     * @see com.yclouds.myhelper.web.valid.ValidUtils
+     */
+    @ExceptionHandler(LogicArgNoValidException.class)
+    @ResponseBody
+    protected ApiResp handleArgEx(HttpServletRequest request, LogicArgNoValidException ex) {
+
+        log.warn("[非法请求参数1] url: {}", request.getRequestURL());
+        return ApiResp.retFail(BaseError.SYSTEM_ARGUMENT_NOT_VALID1, ex.getErrors());
+    }
+
+    /**
+     * 参数绑定异常或者参数检验失败异常
+     * <br>该异常发生在Controller层参数绑定时
+     *
+     * @param request 请求对象
+     * @param ex 异常对象
      * @return 参数不合法
      * @see org.springframework.validation.annotation.Validated
+     * @see javax.validation.Valid
      */
     @ExceptionHandler({BindException.class, MethodArgumentNotValidException.class})
     @ResponseBody
-    protected ApiResp handleOtherEx(HttpServletRequest request, Exception ex) {
-        List<String> list = Lists.newArrayList();
-        if (ex instanceof BindException) {
-            BindException e1 = ((BindException) ex);
-            if (e1.hasErrors()) {
-                list = buildErrorMsg(e1.getFieldErrors());
-            }
-        } else if (ex instanceof MethodArgumentNotValidException) {
-            MethodArgumentNotValidException e2 = (MethodArgumentNotValidException) ex;
-            if (e2.getBindingResult().hasFieldErrors()) {
-                list = buildErrorMsg(e2.getBindingResult().getFieldErrors());
-            }
-        }
-        log.warn("[非法请求参数] url: {}", request.getRequestURL());
-        return ApiResp.retFail(BaseError.SYSTEM_ARGUMENT_NOT_VALID, list);
+    protected ApiResp handleArgEx(HttpServletRequest request, Exception ex) {
+
+        List<String> list = collectErrorMsg(ex);
+        log.warn("[非法请求参数2] url: {}", request.getRequestURL());
+        return ApiResp.retFail(BaseError.SYSTEM_ARGUMENT_NOT_VALID2, list);
     }
 
     /**
@@ -91,8 +120,33 @@ public class ControllerAdviceConfiguration {
         return ApiResp.retFail(BaseError.SYSTEM_EXCEPTION);
     }
 
+
     /**
      * 收集错误信息
+     *
+     * @param ex 异常对象
+     * @return 错误信息列表
+     */
+    private List<String> collectErrorMsg(Exception ex) {
+
+        List<String> errors = Lists.newArrayList();
+        if (ex instanceof BindException) {
+            BindException e1 = ((BindException) ex);
+            if (e1.hasErrors()) {
+                errors = buildErrorMsg(e1.getFieldErrors());
+            }
+        } else if (ex instanceof MethodArgumentNotValidException) {
+            MethodArgumentNotValidException e2 = (MethodArgumentNotValidException) ex;
+            if (e2.getBindingResult().hasFieldErrors()) {
+                errors = buildErrorMsg(e2.getBindingResult().getFieldErrors());
+            }
+        }
+
+        return errors;
+    }
+
+    /**
+     * 构建错误信息
      *
      * @param errors 错误对象
      * @return 错误信息列表

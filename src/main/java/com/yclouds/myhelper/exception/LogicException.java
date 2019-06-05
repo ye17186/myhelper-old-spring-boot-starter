@@ -5,11 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 逻辑异常
+ * 业务逻辑异常
  *
  * @author ye17186
  * @version 2019/5/29 9:33
  */
+@SuppressWarnings("unused")
 @Setter
 @Getter
 public class LogicException extends RuntimeException {
@@ -26,16 +27,35 @@ public class LogicException extends RuntimeException {
      */
     private String msg;
 
+    /**
+     * 详细异常信息
+     */
+    private Object detail;
+
     public LogicException(int code, String msg) {
         super(msg);
         this.code = code;
         this.msg = msg;
     }
 
+    public LogicException(int code, String msg, Object detail) {
+        super(msg);
+        this.code = code;
+        this.msg = msg;
+        this.detail = detail;
+    }
+
     public LogicException(int code, String msg, Throwable cause) {
         super(msg, cause);
         this.code = code;
         this.msg = msg;
+    }
+
+    public LogicException(int code, String msg, Object detail, Throwable cause) {
+        super(msg, cause);
+        this.code = code;
+        this.msg = msg;
+        this.detail = detail;
     }
 
     public LogicException(BaseError error) {
