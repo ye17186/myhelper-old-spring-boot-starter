@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Controller增强处理配置，用于同一异常处理
+ * Controller增强处理插件，用于同一异常处理
  *
  * @author ye17186
  * @version 2019/5/6 15:16
@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @EnableConfigurationProperties(ControllerAdviceProperties.class)
 @ConditionalOnProperty(prefix = "myhelper.plugins.controller-advice", name = "enabled", havingValue = "true")
 @ControllerAdvice
-public class ControllerAdviceConfiguration {
+public class ControllerAdvicePlugin {
 
     /**
      * 业务异常

@@ -1,8 +1,8 @@
 package com.yclouds.myhelper.autoconfigure;
 
 import com.yclouds.myhelper.context.SpringContextHandler;
-import com.yclouds.myhelper.plugins.advice.ControllerAdviceConfiguration;
-import com.yclouds.myhelper.plugins.token.TokenConfiguration;
+import com.yclouds.myhelper.plugins.advice.ControllerAdvicePlugin;
+import com.yclouds.myhelper.plugins.token.TokenPlugin;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import({SpringContextHandler.class,
-    TokenConfiguration.class,
-    ControllerAdviceConfiguration.class})
+    TokenPlugin.class,
+    ControllerAdvicePlugin.class})
 public class MyHelperAutoConfiguration {
 
 }

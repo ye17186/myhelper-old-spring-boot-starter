@@ -11,13 +11,15 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
+ * 基于Token的接口安全插件
+ *
  * @author ye17186
  * @version 2019/5/6 13:15
  */
 @Configuration
 @EnableConfigurationProperties(TokenProperties.class)
 @ConditionalOnProperty(prefix = "myhelper.plugins.token", name = "enabled", havingValue = "true")
-public class TokenConfiguration implements WebMvcConfigurer {
+public class TokenPlugin implements WebMvcConfigurer {
 
     @Autowired
     TokenProperties properties;

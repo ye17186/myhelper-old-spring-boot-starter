@@ -11,10 +11,10 @@ Spring Boot with MyHelper support, help you simplify develop in Sprint Boot web 
 7. ValidUtils：参数校验工具类，用于手动校验参数的合法性
 
 **内置插件：**
-1. TokenConfiguration
+1. TokenPlugin
 提供了基于token、timestamp、nonce、signature接口安全处理，此插件依赖于Redis
 启用方式: myhelper.plugins.token.enabled=true
-2. ControllerAdviceConfiguration
+2. ControllerAdvicePlugin
 提供了控制器的增强处理，用于统一异常处理
 启用方式: myhelper.plugins.advice.enabled=true
 
