@@ -2,6 +2,8 @@ package com.yclouds.myhelper.web.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.yclouds.myhelper.web.error.code.BaseError;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import lombok.Data;
 
@@ -12,6 +14,7 @@ import lombok.Data;
  * @version 2019/2/15 14:40
  */
 @SuppressWarnings("unused")
+@ApiModel(description = "接口统一响应体")
 @Data
 public class ApiResp<T> implements Serializable {
 
@@ -30,14 +33,19 @@ public class ApiResp<T> implements Serializable {
     /**
      * 错误码
      */
+    @ApiModelProperty(value = "错误码")
     private int code = SUCCESS_CODE;
+
     /**
      * 错误信息
      */
+    @ApiModelProperty(value = "错误信息")
     private String msg = SUCCESS_MSG;
+
     /**
      * 响应内容，默认为null
      */
+    @ApiModelProperty(value = "响应内容")
     private T data = null;
 
     /**

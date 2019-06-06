@@ -1,5 +1,6 @@
 package com.yclouds.myhelper.plugins.token;
 
+import com.yclouds.myhelper.plugins.AbstractPlugin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -19,7 +20,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableConfigurationProperties(TokenProperties.class)
 @ConditionalOnProperty(prefix = "myhelper.plugins.token", name = "enabled", havingValue = "true")
-public class TokenPlugin implements WebMvcConfigurer {
+public class TokenPlugin extends AbstractPlugin implements WebMvcConfigurer {
+
+    public TokenPlugin() {
+        printLog();
+    }
 
     @Autowired
     TokenProperties properties;

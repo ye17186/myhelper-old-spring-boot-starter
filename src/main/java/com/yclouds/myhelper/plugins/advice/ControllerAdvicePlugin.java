@@ -2,6 +2,7 @@ package com.yclouds.myhelper.plugins.advice;
 
 import com.google.common.collect.Lists;
 import com.yclouds.myhelper.exception.LogicException;
+import com.yclouds.myhelper.plugins.AbstractPlugin;
 import com.yclouds.myhelper.web.error.code.BaseError;
 import com.yclouds.myhelper.web.response.ApiResp;
 import com.yclouds.myhelper.web.valid.ValidUtils.LogicArgNoValidException;
@@ -32,7 +33,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @EnableConfigurationProperties(ControllerAdviceProperties.class)
 @ConditionalOnProperty(prefix = "myhelper.plugins.controller-advice", name = "enabled", havingValue = "true")
 @ControllerAdvice
-public class ControllerAdvicePlugin {
+public class ControllerAdvicePlugin extends AbstractPlugin {
+
+    public ControllerAdvicePlugin() {
+        printLog();
+    }
 
     /**
      * 业务异常

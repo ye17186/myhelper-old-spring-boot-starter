@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 自定义错误处理
@@ -24,6 +25,7 @@ import org.springframework.web.context.request.WebRequest;
  * @version 2019/3/21 16:05
  */
 @Slf4j
+@ApiIgnore
 @YRestController
 public class YErrorHandler implements ErrorController {
 
