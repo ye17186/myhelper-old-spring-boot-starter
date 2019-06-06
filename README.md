@@ -16,7 +16,10 @@ Spring Boot with MyHelper support, help you simplify develop in Sprint Boot web 
 启用方式: myhelper.plugins.token.enabled=true
 2. ControllerAdvicePlugin
 提供了控制器的增强处理，用于统一异常处理
-启用方式: myhelper.plugins.advice.enabled=true
+启用方式: myhelper.plugins.controller-advice.enabled=true
+3. SwaggerPlugin
+提供了Swagger在线文档功能，只需要在yml中简单配置，即可集成Swagger2
+启用方式: myhelper.plugins.swagger.enabled=true
 
 **Web增强：**
 1. EnumValid、EnumValidator用于校验枚举类型的入参
