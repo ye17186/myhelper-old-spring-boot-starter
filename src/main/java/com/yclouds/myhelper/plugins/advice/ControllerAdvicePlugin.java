@@ -5,7 +5,7 @@ import com.yclouds.myhelper.exception.LogicException;
 import com.yclouds.myhelper.plugins.AbstractPlugin;
 import com.yclouds.myhelper.web.error.code.BaseError;
 import com.yclouds.myhelper.web.response.ApiResp;
-import com.yclouds.myhelper.web.valid.ValidUtils.LogicArgNoValidException;
+import com.yclouds.myhelper.web.valid.LogicArgNoValidException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;

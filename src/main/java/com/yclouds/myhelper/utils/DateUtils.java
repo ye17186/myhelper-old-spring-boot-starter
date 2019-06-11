@@ -25,7 +25,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     public static final String PATTERN_DATE_01 = "yyyy-MM-dd";
     public static final String PATTERN_DATE_02 = "yyyyMMdd";
     public static final String PATTERN_TIME_01 = "HH:mm:ss";
-    public static final String PATTERN_TIME_02 = "HH:mm:ss";
+    public static final String PATTERN_TIME_02 = "HHmmss";
     public static final String PATTERN_MONTH_01 = "yyyy-MM";
     public static final String PATTERN_MONTH_02 = "yyyyMM";
 

@@ -6,8 +6,6 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -43,19 +41,6 @@ public class ValidUtils {
         if (!CollectionUtils.isEmpty(violationSet)) {
             violationSet.forEach(item -> errors.add(item.getMessage()));
             throw new LogicArgNoValidException(errors);
-        }
-    }
-
-    @Setter
-    @Getter
-    public static class LogicArgNoValidException extends RuntimeException {
-
-        private static final long serialVersionUID = 5211542149924795493L;
-
-        private List<String> errors;
-
-        LogicArgNoValidException(List<String> errors) {
-            this.errors = errors;
         }
     }
 }
