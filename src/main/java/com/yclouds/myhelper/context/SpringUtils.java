@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 
 /**
  * Spring上下文工具类。注意：使用之前，请确保ApplicationContext已成功完成初始化。
+ *
  * @author ye17186
  * @version 2019/2/22 11:28
  */
@@ -22,8 +23,8 @@ public class SpringUtils {
      *
      * @param ctx 上下文对象
      */
-    public static void initContext(ApplicationContext ctx) {
-        if(ctx == null) {
+    static void initContext(ApplicationContext ctx) {
+        if (ctx == null) {
             log.warn("ApplicationContext is null.");
             return;
         }

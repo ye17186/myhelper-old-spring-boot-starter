@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 /**
+ * MyHelperAutoConfiguration
+ *
  * @author ye17186
  * @version 2019/5/5 15:15
  */

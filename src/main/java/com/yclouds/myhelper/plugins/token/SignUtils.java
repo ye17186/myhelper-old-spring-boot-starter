@@ -3,6 +3,8 @@ package com.yclouds.myhelper.plugins.token;
 import org.springframework.util.DigestUtils;
 
 /**
+ * Token插件签名工具
+ *
  * @author ye17186
  * @version 2019/5/6 14:37
  */

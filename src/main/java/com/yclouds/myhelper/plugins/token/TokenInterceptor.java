@@ -13,6 +13,7 @@ import org.springframework.web.cors.CorsUtils;
 
 /**
  * Token拦截器，基于token、timestamp、nonce、signature进行检验
+ *
  * @author ye17186
  * @version 2019/5/6 13:55
  */

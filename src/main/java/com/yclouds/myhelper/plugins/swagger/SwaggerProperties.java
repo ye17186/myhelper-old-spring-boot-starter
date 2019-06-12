@@ -6,7 +6,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @author yemeng-lhq
+ * Swagger插件配置属性
+ *
+ * @author ye17186
  * @version 2019/6/6 15:50
  */
 @Setter
