@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -24,6 +25,7 @@ public class ValidUtils {
 
     static {
         validator = Validation.buildDefaultValidatorFactory().getValidator();
+        Assert.notNull(validator, "Validator has not been install.");
     }
 
     /**

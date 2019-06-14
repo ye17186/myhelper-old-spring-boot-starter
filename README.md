@@ -27,3 +27,27 @@ Spring Boot with MyHelper support, help you simplify develop in Sprint Boot web 
 3. StringToDateConverter等，字符串类型参数自动绑定后台Date、LocalDateTime类型
 
 
+#Start
+
+pom.xml加入依赖集合
+```
+<dependency>
+  <groupId>com.yclouds</groupId>
+  <artifactId>myhelper-spring-boot-starter</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+application.yml开启指定插件
+```
+myhelper:
+  plugins:
+    token:
+      enabled: true
+      secret-key: helloWorld
+      valid-duration: 3600
+    controller-advice:
+      enabled: true
+    swagger:
+      enabled: true
+```
+
