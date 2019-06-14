@@ -28,8 +28,7 @@ Spring Boot with MyHelper support, help you simplify develop in Sprint Boot web 
 
 
 #Start
-
-pom.xml加入依赖集合
+pom.xml加入MyHelper依赖
 ```
 <dependency>
   <groupId>com.yclouds</groupId>
