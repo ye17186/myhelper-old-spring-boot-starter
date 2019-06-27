@@ -3,7 +3,7 @@ Spring Boot with MyHelper support, help you simplify develop in Sprint Boot web 
 
 **内置工具类：**
 1. DateUtils：时间工具类，用于处理时间，包括JDK8中的时间
-2. IdGenUtils：ID生成工具类，用于生成全局唯一的ID，内置了基于内存和基于Redis的两种算法
+2. IdGenUtils：ID生成工具类，用于生成全局唯一的ID，内置了基于SnowFlake算法的分布式ID生成策略
 3. JsonUtils：Json格式化工具类，基于Jackson的json处理
 4. RedisUtils：Redis操作工具类，封装了普通Object、Set、List、Map多种对象的处理方法
 5. StringUtils：字符串工具类，扩展至org.apache.commons.lang3.StringUtils，提供常用的字符串处理方法
@@ -33,7 +33,7 @@ pom.xml加入MyHelper依赖
 <dependency>
   <groupId>com.yclouds</groupId>
   <artifactId>myhelper-spring-boot-starter</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 application.yml开启指定插件
