@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * com.yclouds.myhelper.sequence.AbstractSequence
  *
- * @author yemeng-lhq
+ * @author ye17186
  * @version 2019/6/26 12:05
  */
 @Slf4j
