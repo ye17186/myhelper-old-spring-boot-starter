@@ -44,7 +44,7 @@ public class EnumValidator implements ConstraintValidator<EnumValid, String> {
                     }
                 }
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                log.warn("EnumValidator call isValid() method exception.");
+                log.warn("EnumValidator call isValid() method exception.", e);
                 result = false;
             }
         } else {

@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import org.springframework.util.Assert;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -15,6 +15,7 @@ import org.springframework.util.CollectionUtils;
  * @version 2019/6/4 17:37
  */
 @SuppressWarnings("unused")
+@Slf4j
 public class ValidUtils {
 
     private ValidUtils() {
@@ -24,7 +25,7 @@ public class ValidUtils {
 
     static {
         validator = Validation.buildDefaultValidatorFactory().getValidator();
-        Assert.notNull(validator, "Validator has not been install.");
+        checkValidator();
     }
 
     /**
@@ -37,11 +38,29 @@ public class ValidUtils {
      */
     public static <T> void valid(T bean, Class<?>... clz) {
 
-        Set<ConstraintViolation<T>> violationSet = validator.validate(bean, clz);
-        if (!CollectionUtils.isEmpty(violationSet)) {
-            throw new LogicArgNoValidException(
-                violationSet.stream().map(ConstraintViolation::getMessage)
-                    .collect(Collectors.toList()));
+        if (checkValidator()) {
+            Set<ConstraintViolation<T>> violationSet = validator.validate(bean, clz);
+            if (!CollectionUtils.isEmpty(violationSet)) {
+                throw new LogicArgNoValidException(
+                    violationSet.stream().map(ConstraintViolation::getMessage)
+                        .collect(Collectors.toList()));
+            }
         }
+    }
+
+    /**
+     * 校验Validator是否被启用
+     *
+     * @return true=启用; false=未启用
+     */
+    private static boolean checkValidator() {
+
+        boolean result = true;
+
+        if (validator == null) {
+            result = false;
+            log.warn("Validator has not been installed.");
+        }
+        return result;
     }
 }
