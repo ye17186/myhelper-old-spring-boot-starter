@@ -16,6 +16,13 @@ public class LogicArgNoValidException extends RuntimeException {
     private List<String> errors;
 
     LogicArgNoValidException(List<String> errors) {
+        super("Args No Valid.");
+        this.errors = errors;
+    }
+
+    LogicArgNoValidException(List<String> errors, String message) {
+
+        super(message);
         this.errors = errors;
     }
 }

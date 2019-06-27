@@ -1,16 +1,16 @@
 package com.yclouds.myhelper.utils;
 
-import com.yclouds.myhelper.sequence.MemorySeqCounter;
-import com.yclouds.myhelper.sequence.RedisSeqCounter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import com.yclouds.myhelper.sequence.IdWorker;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * ID生成器
- * <br>序列号利用AtomicLong来生成，保证毫秒内不重复
- * <br>此ID生成器不保证ID的绝对递增，但可以保证趋势递增（因为高位依赖于时间）
+ * <pre>1、基于SnowFlake的分布式ID（long类型）</pre>
+ * <pre>2、基于SnowFlake的分布式ID（String类型）</pre>
+ * <pre>3、基于SnowFlake的分布式ID变种（显示时间）</pre>
+ * <pre>4、UUID</pre>
  *
  * @author ye17186
  * @version 2019/3/22 15:16
@@ -22,58 +22,50 @@ public class IdGenUtils {
     private IdGenUtils() {
     }
 
-    private static final int YEAR_LEN = 2;
-    private static final int DAY_LEN = 3;
-    private static final String TIME_FORMAT = "HHmmssSSS";
-    private static final int SEQ_LEN = 4;
-
     /**
-     * 最大seq数量
+     * 生成一个UUID，去掉"-"
+     * <p>多线程环境下，使用ThreadLocalRandom获取UUID效果更优</p>
      */
-    public static final int maxSeq = (int) Math.pow(10, SEQ_LEN);
-
-    /**
-     * 基于内存生成唯一ID
-     *
-     * @return 全局唯一ID
-     */
-    public static long nextIdByMem() {
-
-        long seq = MemorySeqCounter.nextSeq();
-        return convert(seq);
-    }
-
-    /**
-     * 基于Redis生成唯一ID
-     *
-     * @return 全局唯一ID
-     */
-    public static long nextIdByRedis() {
-        long seq = RedisSeqCounter.nextSeq();
-        return convert(seq);
-    }
-
     public static String uuid() {
-        return UUID.randomUUID().toString().toUpperCase().replaceAll("-", "");
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        return new UUID(random.nextLong(), random.nextLong()).toString()
+            .replace(StringPool.DASH, StringPool.EMPTY);
     }
 
     /**
-     * SEQ转ID
-     * <br>
-     * 随机数利用AtomicLong来实现， ID格式：1-2位：年份；3-5：年中第N天；6-14：HHmmssSSS：15-18：自增随机数
+     * 下一个long类型ID
      *
-     * @param seq 源Seq
-     * @return 系统ID
+     * @return 下一个ID
      */
-    private static long convert(long seq) {
+    public static long nextId() {
+        return IdWorker.nextId();
+    }
 
-        LocalDateTime now = LocalDateTime.now();
+    /**
+     * 下一个String类型ID
+     *
+     * @return 下一个ID
+     */
+    public static String nextIdStr() {
+        return IdWorker.nextIdStr();
+    }
 
-        String year = StringUtils.right(String.valueOf(now.getYear()), YEAR_LEN);
-        String day = StringUtils.leftPadZero(now.getDayOfYear(), DAY_LEN);
-        String time = now.format(DateTimeFormatter.ofPattern(TIME_FORMAT));
-        String seqStr = StringUtils.leftPadZero((int) seq, SEQ_LEN);
+    /**
+     * 时间 ID = Time + DateCenter + Worker + Seq
+     * <p>例如：可用于商品订单 ID</p>
+     */
+    public static String nextTimeId() {
 
-        return Long.valueOf(year + day + time + seqStr);
+        return IdWorker.nextTimeId();
+    }
+
+    /**
+     * 初始化IdWorker
+     *
+     * @param dataCenterId 数据中心ID
+     * @param workerId 机器ID
+     */
+    public static void initWorker(long dataCenterId, long workerId) {
+        IdWorker.initWorker(dataCenterId, workerId);
     }
 }

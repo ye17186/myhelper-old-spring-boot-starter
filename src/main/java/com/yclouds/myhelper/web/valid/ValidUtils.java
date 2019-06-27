@@ -1,8 +1,7 @@
 package com.yclouds.myhelper.web.valid;
 
-import com.google.common.collect.Lists;
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -38,11 +37,11 @@ public class ValidUtils {
      */
     public static <T> void valid(T bean, Class<?>... clz) {
 
-        List<String> errors = Lists.newArrayList();
         Set<ConstraintViolation<T>> violationSet = validator.validate(bean, clz);
         if (!CollectionUtils.isEmpty(violationSet)) {
-            violationSet.forEach(item -> errors.add(item.getMessage()));
-            throw new LogicArgNoValidException(errors);
+            throw new LogicArgNoValidException(
+                violationSet.stream().map(ConstraintViolation::getMessage)
+                    .collect(Collectors.toList()));
         }
     }
 }
