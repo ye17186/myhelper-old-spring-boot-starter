@@ -1,8 +1,7 @@
 package com.yclouds.myhelper.web.error.handler;
 
 import com.yclouds.myhelper.web.annotation.YRestController;
-import com.yclouds.myhelper.web.error.code.BaseError;
-import com.yclouds.myhelper.web.error.code.HttpError;
+import com.yclouds.myhelper.web.error.code.BaseEnumError;
 import com.yclouds.myhelper.web.response.ApiResp;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +40,7 @@ public class YErrorHandler implements ErrorController {
 
     @RequestMapping(value = ERROR_PATH)
     @ResponseBody
-    public ApiResp<HttpError> error(HttpServletRequest request,
+    public ApiResp<Map<String, Object>> error(HttpServletRequest request,
         HttpServletResponse response) {
 
         WebRequest webRequest = new ServletWebRequest(request);
@@ -55,7 +54,7 @@ public class YErrorHandler implements ErrorController {
         log.warn("[System Exception] path: {}, error: {}, status: {}", path, msg, status);
 
         return ApiResp
-            .retFail(BaseError.SYSTEM_EXCEPTION.getCode(), BaseError.SYSTEM_EXCEPTION.getMsg(),
-                new HttpError(status, path, msg));
+            .retFail(BaseEnumError.SYSTEM_EXCEPTION.getCode(), BaseEnumError.SYSTEM_EXCEPTION.getMsg(),
+                error);
     }
 }

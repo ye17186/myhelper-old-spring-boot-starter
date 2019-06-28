@@ -3,7 +3,7 @@ package com.yclouds.myhelper.plugins.advice;
 import com.google.common.collect.Lists;
 import com.yclouds.myhelper.exception.LogicException;
 import com.yclouds.myhelper.plugins.AbstractPlugin;
-import com.yclouds.myhelper.web.error.code.BaseError;
+import com.yclouds.myhelper.web.error.code.BaseEnumError;
 import com.yclouds.myhelper.web.response.ApiResp;
 import com.yclouds.myhelper.web.valid.LogicArgNoValidException;
 import java.util.List;
@@ -69,7 +69,7 @@ public class ControllerAdvicePlugin extends AbstractPlugin {
     protected ApiResp handleArgEx(HttpServletRequest request, LogicArgNoValidException ex) {
 
         log.warn("[非法请求参数1] url: {}", request.getRequestURL());
-        return ApiResp.retFail(BaseError.SYSTEM_ARGUMENT_NOT_VALID1, ex.getErrors());
+        return ApiResp.retFail(BaseEnumError.SYSTEM_ARGUMENT_NOT_VALID1, ex.getErrors());
     }
 
     /**
@@ -88,7 +88,7 @@ public class ControllerAdvicePlugin extends AbstractPlugin {
 
         List<String> list = collectErrorMsg(ex);
         log.warn("[非法请求参数2] url: {}", request.getRequestURL());
-        return ApiResp.retFail(BaseError.SYSTEM_ARGUMENT_NOT_VALID2, list);
+        return ApiResp.retFail(BaseEnumError.SYSTEM_ARGUMENT_NOT_VALID2, list);
     }
 
     /**
@@ -105,7 +105,7 @@ public class ControllerAdvicePlugin extends AbstractPlugin {
         String method = request.getMethod();
         log.warn("[请求方法不支持] url: {}，method: {}", request.getRequestURL(), method);
 
-        return ApiResp.retFail(BaseError.SYSTEM_REQUEST_METHOD_NOT_SUPPORTED, method);
+        return ApiResp.retFail(BaseEnumError.SYSTEM_REQUEST_METHOD_NOT_SUPPORTED, method);
     }
 
     /**
@@ -122,7 +122,7 @@ public class ControllerAdvicePlugin extends AbstractPlugin {
     protected ApiResp handleException(HttpServletRequest request, Exception ex) {
 
         log.error("[系统异常] url: {}", request.getRequestURL(), ex);
-        return ApiResp.retFail(BaseError.SYSTEM_EXCEPTION);
+        return ApiResp.retFail(BaseEnumError.SYSTEM_EXCEPTION);
     }
 
 

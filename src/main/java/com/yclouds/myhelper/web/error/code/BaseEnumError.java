@@ -9,7 +9,7 @@ import lombok.Getter;
  * @version 2019/2/18 15:49
  */
 @Getter
-public enum BaseError {
+public enum BaseEnumError implements IEnumError {
 
     SYSTEM_EXCEPTION(10001, "系统异常，请联系管理员"),
     SYSTEM_REQUEST_METHOD_NOT_SUPPORTED(10002, "请求方法不支持"),
@@ -36,7 +36,7 @@ public enum BaseError {
      */
     private final String msg;
 
-    BaseError(int code, String msg) {
+    BaseEnumError(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }

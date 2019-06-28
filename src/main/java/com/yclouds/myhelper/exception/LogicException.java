@@ -1,6 +1,6 @@
 package com.yclouds.myhelper.exception;
 
-import com.yclouds.myhelper.web.error.code.BaseError;
+import com.yclouds.myhelper.web.error.code.IEnumError;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -81,7 +81,7 @@ public class LogicException extends RuntimeException {
     /**
      * @param error 错误对象
      */
-    public LogicException(BaseError error) {
+    public LogicException(IEnumError error) {
         super(error.getMsg());
         this.code = error.getCode();
         this.msg = error.getMsg();
@@ -91,7 +91,7 @@ public class LogicException extends RuntimeException {
      * @param error 错误对象
      * @param cause 异常对象
      */
-    public LogicException(BaseError error, Throwable cause) {
+    public LogicException(IEnumError error, Throwable cause) {
         super(error.getMsg(), cause);
         this.code = error.getCode();
         this.msg = error.getMsg();

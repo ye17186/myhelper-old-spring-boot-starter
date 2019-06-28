@@ -1,7 +1,7 @@
 package com.yclouds.myhelper.web.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.yclouds.myhelper.web.error.code.BaseError;
+import com.yclouds.myhelper.web.error.code.BaseEnumError;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
@@ -82,7 +82,7 @@ public class ApiResp<T> implements Serializable {
      *
      * @param error 错误类型
      */
-    public static ApiResp retFail(BaseError error) {
+    public static ApiResp retFail(BaseEnumError error) {
         return retFail(error.getCode(), error.getMsg());
     }
 
@@ -92,7 +92,7 @@ public class ApiResp<T> implements Serializable {
      * @param error 错误类型
      * @param data 详细错误信息
      */
-    public static <T> ApiResp<T> retFail(BaseError error, T data) {
+    public static <T> ApiResp<T> retFail(BaseEnumError error, T data) {
         return retFail(error.getCode(), error.getMsg(), data);
     }
 
