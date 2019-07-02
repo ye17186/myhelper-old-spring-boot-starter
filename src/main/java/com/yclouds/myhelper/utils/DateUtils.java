@@ -1,6 +1,7 @@
 package com.yclouds.myhelper.utils;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -37,6 +38,16 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      */
     public static LocalDateTime toLocalDateTime(Date date) {
         return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+    }
+
+    /**
+     * 时间戳转LocalDateTime
+     *
+     * @param timestamp 时间戳
+     * @return LocalDateTime类型的时间
+     */
+    public static LocalDateTime toLocalDateTime(long timestamp) {
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault());
     }
 
     /**

@@ -25,7 +25,9 @@ Spring Boot with MyHelper support, help you simplify develop in Sprint Boot web 
 1. EnumValid、EnumValidator用于校验枚举类型的入参
 2. ApiRes、ApiResp项目统一的入参及响应类型
 3. StringToDateConverter等，字符串类型参数自动绑定后台Date、LocalDateTime类型
-
+4. MethodLogPoint方法日志切面处理，基于AOP的方法级日志切面处理，可用来打印日志。
+支持敏感参数脱敏，支持忽略方法返回结果，支持打印客户端信息（客户端IP等）
+5. ApiAccessFilter过滤器，默认处理所有API，打印进入和离开日志，统计API耗时
 
 # Start
 pom.xml加入MyHelper依赖
@@ -49,4 +51,43 @@ myhelper:
     swagger:
       enabled: true
 ```
+MethodLogPoint使用
+
+1. 配置MethodLog处理器，并通过```@EnableMethodLog```启用
+```
+@EnableMethodLog
+@Configuration
+public class MethodLogConfig implements MethodLogConfigurer {
+
+    @Override
+    public void afterReturn(MethodLogModel logModel) {
+
+        log.info(JsonUtils.obj2Json(logModel));
+    }
+
+    @Override
+    public void afterThrow(MethodLogModel logModel) {
+
+        log.info(JsonUtils.obj2Json(logModel));
+    }
+}
+```
+2. 日志记录
+```
+@MethodLogPoint(action = "demo", sensitiveParams = "password1", includeRequest = true)
+@RequestMapping("/demo")
+public ApiResp demo() {
+
+    return ApiResp.retOK();
+}
+```
+ApiAccessFilter使用
+```
+@SpringBootApplication
+@EnableApiAccessFilter
+public class DemoAsyncApplication {
+  ...
+}
+```
+
 
