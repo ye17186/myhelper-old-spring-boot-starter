@@ -52,11 +52,13 @@ public class MethodLogConfiguration extends AbstractMethodLogConfiguration {
     public void afterReturning(JoinPoint joinPoint, MethodLogPoint point, Object ret) {
 
         configurer.afterReturn(buildLog(joinPoint, point, ret, null));
+        entryTime.remove();
     }
 
     @AfterThrowing(value = "@annotation(point)", throwing = "ex")
     public void afterThrowing(JoinPoint joinPoint, MethodLogPoint point, Throwable ex) {
         configurer.afterThrow(buildLog(joinPoint, point, null, ex));
+        entryTime.remove();
     }
 
     private MethodLogModel buildLog(JoinPoint joinPoint, MethodLogPoint point, Object ret,
