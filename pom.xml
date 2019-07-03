@@ -70,16 +70,19 @@
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger2</artifactId>
       <version>${swagger2.version}</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger-ui</artifactId>
       <version>${swagger2.version}</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>io.springfox</groupId>
       <artifactId>springfox-bean-validators</artifactId>
       <version>${swagger2.version}</version>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 </project>
