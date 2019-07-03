@@ -20,6 +20,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 /**
  * Controller增强处理插件，用于同一异常处理
@@ -106,6 +107,22 @@ public class ControllerAdvicePlugin extends AbstractPlugin {
         log.warn("[请求方法不支持] url: {}，method: {}", request.getRequestURL(), method);
 
         return ApiResp.retFail(BaseEnumError.SYSTEM_REQUEST_METHOD_NOT_SUPPORTED, method);
+    }
+
+    /**
+     * 最后兜底的异常处理
+     * <br>
+     * 由请求接口不存在产生的404异常，不会走到这里，所有另外定义了YErrorHandler来处理这类异常
+     *
+     * @param ex 异常对象
+     * @see com.yclouds.myhelper.web.error.handler.YErrorHandler
+     */
+    @ExceptionHandler(NoHandlerFoundException.class)
+    @ResponseBody
+    protected ApiResp handleException(NoHandlerFoundException ex) {
+
+        log.error("[请求地址不存在] url: {}, method: {}", ex.getRequestURL(), ex.getHttpMethod());
+        return ApiResp.retFail(BaseEnumError.SYSTEM_REQUEST_URL_NOT_FOUND, ex.getMessage());
     }
 
     /**
