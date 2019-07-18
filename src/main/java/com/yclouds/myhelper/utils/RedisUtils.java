@@ -237,26 +237,17 @@ public class RedisUtils {
     }
 
     /**
-     * 加锁
+     * 不存在则设置
      *
-     * @param key 锁名
-     * @param timeout 超时时间，单位：秒
-     * @return true：加锁成功；false：加锁失败
+     * @param key Redis键
+     * @param value 值
+     * @param timeout 超时时间
+     * @return true=设置成功；false=设置失败
      */
-    public static boolean lock(final String key, final long timeout) {
+    public static boolean setNx(final String key, Object value, final long timeout) {
         Boolean ret = redisTemplate.opsForValue()
-            .setIfAbsent(REDIS_LOCK_PREFIX + key, key, timeout, TimeUnit.SECONDS);
+            .setIfAbsent(key, value, timeout, TimeUnit.SECONDS);
         return ret != null && ret;
-    }
-
-    /**
-     * 解锁
-     *
-     * @param key 锁名
-     * @return true：解锁成功；false：解锁失败
-     */
-    public static boolean unlock(final String key) {
-        return del(REDIS_LOCK_PREFIX + key);
     }
 
     /**

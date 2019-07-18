@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -23,7 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuppressWarnings("unused")
 public class JsonUtils {
 
-    private JsonUtils(){}
+    private JsonUtils() {
+    }
 
     private static ObjectMapper om = new ObjectMapper();
 
