@@ -9,7 +9,7 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 /**
- * com.yclouds.myhelper.web.valid.MobileValid
+ * 手机号校验注解
  *
  * @author ye17186
  * @version 2019/7/18 15:34
