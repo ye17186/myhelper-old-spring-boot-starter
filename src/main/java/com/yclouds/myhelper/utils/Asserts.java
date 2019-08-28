@@ -16,6 +16,12 @@ import org.springframework.util.CollectionUtils;
  */
 public class Asserts {
 
+    /**
+     * 断言不为null
+     *
+     * @param obj 断言对象
+     * @param enumError 错误信息
+     */
     public static void notNull(@Nullable Object obj, IEnumError enumError) {
 
         if (obj == null) {
@@ -23,6 +29,12 @@ public class Asserts {
         }
     }
 
+    /**
+     * 断言为null
+     *
+     * @param obj 断言对象
+     * @param enumError 错误信息
+     */
     public static void isNull(@Nullable Object obj, IEnumError enumError) {
 
         if (obj != null) {
@@ -30,6 +42,12 @@ public class Asserts {
         }
     }
 
+    /**
+     * 断言为真
+     *
+     * @param expression 断言表达式
+     * @param enumError 错误信息
+     */
     public static void isTrue(boolean expression, IEnumError enumError) {
 
         if (!expression) {
@@ -37,6 +55,25 @@ public class Asserts {
         }
     }
 
+    /**
+     * 断言为假
+     *
+     * @param expression 断言表达式
+     * @param enumError 错误信息
+     */
+    public static void isFalse(boolean expression, IEnumError enumError) {
+
+        if (expression) {
+            throw new LogicException(enumError);
+        }
+    }
+
+    /**
+     * 断言集合对象不为空
+     *
+     * @param collection 断言对象
+     * @param enumError 错误信息
+     */
     public static void notEmpty(@Nullable Collection<?> collection, IEnumError enumError) {
 
         if (CollectionUtils.isEmpty(collection)) {
@@ -44,6 +81,12 @@ public class Asserts {
         }
     }
 
+    /**
+     * 断言Map对象不为空
+     *
+     * @param map 断言对象
+     * @param enumError 错误信息
+     */
     public static void notEmpty(@Nullable Map<?, ?> map, IEnumError enumError) {
 
         if (CollectionUtils.isEmpty(map)) {
@@ -51,6 +94,12 @@ public class Asserts {
         }
     }
 
+    /**
+     * 断言字符串不为空
+     *
+     * @param text 断言对象
+     * @param enumError 错误信息
+     */
     public static void hasLength(@Nullable String text, IEnumError enumError) {
 
         if (StringUtils.isEmpty(text)) {

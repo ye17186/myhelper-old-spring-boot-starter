@@ -6,7 +6,6 @@ package com.yclouds.myhelper.utils;
  * @author ye17186
  * @version 2019/6/25 17:16
  */
-@SuppressWarnings("unused")
 public interface StringPool {
 
     String AMPERSAND = "&";

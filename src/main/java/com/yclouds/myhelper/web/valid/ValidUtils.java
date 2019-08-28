@@ -1,5 +1,6 @@
 package com.yclouds.myhelper.web.valid;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
@@ -14,7 +15,6 @@ import org.springframework.util.CollectionUtils;
  * @author ye17186
  * @version 2019/6/4 17:37
  */
-@SuppressWarnings("unused")
 @Slf4j
 public class ValidUtils {
 
@@ -25,42 +25,50 @@ public class ValidUtils {
 
     static {
         validator = Validation.buildDefaultValidatorFactory().getValidator();
-        checkValidator();
+        if (validator == null) {
+            log.warn("Validator has not been installed.");
+        }
     }
 
     /**
      * 分组校验Bean
+     * <pre>此方式下校验Bean不通过时，会抛出异常LogicArgNoValidException</pre>
      *
      * @param bean 待校验的Bean对象
      * @param clz 分组Class
-     * @param <T> Bean类型
      * @see org.springframework.validation.annotation.Validated
+     * @see LogicArgNoValidException
      */
-    public static <T> void valid(T bean, Class<?>... clz) {
+    public static void valid(Object bean, Class<?>... clz) {
 
-        if (checkValidator()) {
-            Set<ConstraintViolation<T>> violationSet = validator.validate(bean, clz);
-            if (!CollectionUtils.isEmpty(violationSet)) {
-                throw new LogicArgNoValidException(
-                    violationSet.stream().map(ConstraintViolation::getMessage)
-                        .collect(Collectors.toList()));
-            }
+        Set<ConstraintViolation<Object>> violationSet = validator.validate(bean, clz);
+        if (!CollectionUtils.isEmpty(violationSet)) {
+            throw new LogicArgNoValidException(
+                violationSet.stream().map(ConstraintViolation::getMessage)
+                    .collect(Collectors.toList()));
+
         }
     }
 
     /**
-     * 校验Validator是否被启用
+     * 静默的方式分组校验Bean
+     * <pre>此方式下校验Bean不通过时，不会抛出异常，而是直接返回异常信息列表</pre>
+     * <pre>Bean校验通过的话，会返回一个null对象</pre>
      *
-     * @return true=启用; false=未启用
+     * @param bean 待校验的Bean对象
+     * @param clz 分组Class
+     * @return 异常信息列表
+     *
+     * @see org.springframework.validation.annotation.Validated
      */
-    private static boolean checkValidator() {
+    public static List<String> validSilent(Object bean, Class<?>... clz) {
 
-        boolean result = true;
-
-        if (validator == null) {
-            result = false;
-            log.warn("Validator has not been installed.");
+        List<String> errors = null;
+        Set<ConstraintViolation<Object>> violationSet = validator.validate(bean, clz);
+        if (!CollectionUtils.isEmpty(violationSet)) {
+            errors = violationSet.stream().map(ConstraintViolation::getMessage).collect(
+                Collectors.toList());
         }
-        return result;
+        return errors;
     }
 }

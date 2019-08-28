@@ -9,7 +9,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * @author ye17186
  * @version 2018/7/2 9:28
  */
-@SuppressWarnings("unused")
 public class RequestUtils {
 
     private RequestUtils(){}
@@ -44,7 +43,6 @@ public class RequestUtils {
         if (request == null) {
             return "0.0.0.0";
         }
-
         String Xip = request.getHeader("X-Real-IP");
         String XFor = request.getHeader("X-Forwarded-For");
 

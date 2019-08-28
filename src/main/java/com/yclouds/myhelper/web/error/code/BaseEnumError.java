@@ -11,21 +11,23 @@ import lombok.Getter;
 @Getter
 public enum BaseEnumError implements IEnumError {
 
-    SYSTEM_EXCEPTION(10001, "系统异常，请联系管理员"),
-    SYSTEM_REQUEST_URL_NOT_FOUND(10002, "请求地址不存在"),
-    SYSTEM_REQUEST_METHOD_NOT_SUPPORTED(10003, "请求方法不支持"),
-    SYSTEM_ARGUMENT_NOT_VALID1(10004, "业务参数不合法"),
-    SYSTEM_ARGUMENT_NOT_VALID2(10005, "接口参数不合法"),
-    SYSTEM_TOKEN_INVALID_01(10011, "非法请求"),
-    SYSTEM_TOKEN_INVALID_02(10012, "非法请求"),
-    SYSTEM_TOKEN_INVALID_03(10013, "非法请求"),
-    SYSTEM_TOKEN_INVALID_04(10014, "非法请求"),
-    SYSTEM_TOKEN_INVALID_05(10015, "非法请求"),
+    SYSTEM_EXCEPTION(101, "系统异常，请联系管理员"),
+    SYSTEM_REQUEST_URL_NOT_FOUND(102, "请求地址不存在"),
+    SYSTEM_REQUEST_METHOD_NOT_SUPPORTED(103, "请求方法不支持"),
+    SYSTEM_ARGUMENT_NOT_VALID1(104, "业务参数不合法"),
+    SYSTEM_ARGUMENT_NOT_VALID2(105, "接口参数不合法"),
+    SYSTEM_TOKEN_INVALID_01(106, "非法请求"),
+    SYSTEM_TOKEN_INVALID_02(107, "非法请求"),
+    SYSTEM_TOKEN_INVALID_03(108, "非法请求"),
+    SYSTEM_TOKEN_INVALID_04(109, "非法请求"),
+    SYSTEM_TOKEN_INVALID_05(110, "非法请求"),
+    SYSTEM_ASYNC_RESULT_GET_EX(111, "获取异步结果已出"),
+    SYSTEM_ASYNC_RESULT_GET_TIMEOUT(112, "后去异步结果超时"),
 
 
-    SYSTEM_NO_LOGIN(10104, "用户未登录"),
-    SERVICE_ERROR(10101, "服务暂不可用，请稍后重试"),
-    SERVICE_DOWN(10102, "服务[${serviceId}]暂不可用，请稍后重试");
+    SYSTEM_NO_LOGIN(201, "用户未登录"),
+    SERVICE_ERROR(202, "服务暂不可用，请稍后重试"),
+    SERVICE_DOWN(203, "服务[${serviceId}]暂不可用，请稍后重试");
 
     /**
      * 错误码
