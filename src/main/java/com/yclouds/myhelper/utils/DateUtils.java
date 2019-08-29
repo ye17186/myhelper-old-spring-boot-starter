@@ -70,15 +70,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     /**
-     * 获取当前时间的yyyy-MM-dd HH:mm:ss格式的时间字符串
-     *
-     * @return 当前时间字符串
-     */
-    public static String format() {
-        return format(PATTERN_DATETIME_01);
-    }
-
-    /**
      * 获取dataTime时间的yyyy-MM-dd HH:mm:ss格式的时间字符串
      *
      * @param dataTime 指定时间
@@ -86,16 +77,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      */
     public static String format(LocalDateTime dataTime) {
         return format(dataTime, PATTERN_DATETIME_01);
-    }
-
-    /**
-     * 获取当前时间pattern格式的字符串
-     *
-     * @param pattern 时间格式
-     * @return pattern格式的时间字符串
-     */
-    public static String format(String pattern) {
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern));
     }
 
     /**
