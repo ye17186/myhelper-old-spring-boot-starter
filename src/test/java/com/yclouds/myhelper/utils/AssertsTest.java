@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * com.yclouds.myhelper.utils.AssertsTest
  *
- * @author yemeng-lhq
+ * @author ye17186
  * @version 2019/8/29 9:40
  */
 public class AssertsTest {

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 异步任务获取处理结果工具类
  *
- * @author yemeng-lhq
+ * @author ye17186
  * @version 2019/8/20 14:32
  */
 public class FutureUtils {
