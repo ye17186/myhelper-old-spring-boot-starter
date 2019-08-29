@@ -71,9 +71,10 @@ public class FutureUtils {
                 try {
                     return future.get();
                 } catch (InterruptedException e) {
-                    logger.warn(e.getMessage(), e);
+                    logger.error(e.getMessage(), e);
                     throw new LogicException(BaseEnumError.SYSTEM_ASYNC_RESULT_GET_EX);
                 } catch (ExecutionException e) {
+                    logger.warn(e.getMessage(), e);
                     if (e.getCause() instanceof LogicException) {
                         throw (LogicException) e.getCause();
                     }

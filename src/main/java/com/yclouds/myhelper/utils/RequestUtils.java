@@ -11,7 +11,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  */
 public class RequestUtils {
 
-    private RequestUtils(){}
+    private RequestUtils() {
+    }
 
     /**
      * 获取当前请求的 Request对象
@@ -27,6 +28,7 @@ public class RequestUtils {
 
     /**
      * 获取发起当前请求的客户端IP
+     *
      * @return 客户端IP地址
      */
     public static String getIP() {
@@ -48,8 +50,8 @@ public class RequestUtils {
 
         String UNKNOWN_IP = "unknown";
         if (StringUtils.isNotEmpty(XFor) && !UNKNOWN_IP.equalsIgnoreCase(XFor)) {
-            //多次反向代理后会有多个ip值，第一个ip才是真实ip
-            int index = XFor.indexOf(",");
+            // 多次反向代理后会有多个ip值，第一个ip才是真实ip
+            int index = XFor.indexOf(StringPool.COMMA);
             if (index != -1) {
                 return XFor.substring(0, index);
             } else {
