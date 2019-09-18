@@ -12,7 +12,8 @@ import org.springframework.util.CollectionUtils;
 @Configuration
 public abstract class AbstractMethodLogConfiguration {
 
-    MethodLogConfigurer configurer;
+    MethodLogConfigurer configurer = new MethodLogConfigurer() {
+    };
 
     @Autowired(required = false)
     void setConfigurers(Collection<MethodLogConfigurer> configurers) {
