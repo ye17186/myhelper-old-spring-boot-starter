@@ -21,8 +21,12 @@ public abstract class AbstractMethodLogConfiguration {
             return;
         }
         if (configurers.size() > 1) {
-            throw new IllegalStateException("Only one MethodLogConfigurer may exist");
+            throw new IllegalStateException("Only one MethodLogConfigurer is allowed.");
         }
-        this.configurer = configurers.iterator().next();
+
+        MethodLogConfigurer config = configurers.iterator().next();
+        if (config != null) {
+            this.configurer = config;
+        }
     }
 }

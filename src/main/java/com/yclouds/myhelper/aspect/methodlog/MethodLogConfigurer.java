@@ -8,9 +8,17 @@ import com.yclouds.myhelper.aspect.methodlog.model.MethodLogModel;
  */
 public interface MethodLogConfigurer {
 
-    default void afterReturn(MethodLogModel log) {
+    /**
+     * 方法正常返回后的处理
+     *
+     * @param logModel 日志对象
+     */
+    default void afterReturn(MethodLogModel logModel) {
     }
 
-    default void afterThrow(MethodLogModel log) {
+    /**
+     * 方法抛出异常后的处理
+     */
+    default void afterThrow(MethodLogModel logModel) {
     }
 }
