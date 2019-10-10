@@ -1,7 +1,7 @@
 # myhelper-spring-boot-starter
 一个用于简化开发的sprint-boot-starter项目，暂且把它命名为myhelper吧
 
-**作者：ye17186，博客地址：<a href="https://blog.csdn.net/ye17186" target="_blank">IT小跟班https://blog.csdn.net/ye17186</a>**
+**作者：ye17186，博客地址：<a href="https://blog.csdn.net/ye17186" target="_blank">IT小跟班</a>**
 
 **内置工具类：**
 1. DateUtils：时间工具类，用于处理时间，包括JDK8中的时间
