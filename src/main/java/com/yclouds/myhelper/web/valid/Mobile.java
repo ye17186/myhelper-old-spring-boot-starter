@@ -9,16 +9,16 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 /**
- * 枚举校验注解
+ * 手机号校验注解
  *
  * @author ye17186
- * @version 2019/3/6 15:53
+ * @version 2019/7/18 15:34
  */
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = {EnumValidator.class})
-public @interface EnumValid {
+@Constraint(validatedBy = {MobileValidator.class})
+public @interface Mobile {
 
     String message() default "";
 
@@ -27,12 +27,7 @@ public @interface EnumValid {
     Class<? extends Payload>[] payload() default {};
 
     /**
-     * 目标枚举类
+     * 手机号正则
      */
-    Class<?> target() default Class.class;
-
-    /**
-     * 是否忽略空值
-     */
-    boolean ignoreEmpty() default true;
+    String pattern() default "^1[3|4|5|7|8][0-9]\\\\d{4,8}$";
 }

@@ -9,16 +9,16 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 /**
- * 手机号校验注解
+ * 枚举校验注解
  *
  * @author ye17186
- * @version 2019/7/18 15:34
+ * @version 2019/3/6 15:53
  */
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = {MobileValidator.class})
-public @interface MobileValid {
+@Constraint(validatedBy = {EnumValidator.class})
+public @interface Enum {
 
     String message() default "";
 
@@ -26,4 +26,13 @@ public @interface MobileValid {
 
     Class<? extends Payload>[] payload() default {};
 
+    /**
+     * 目标枚举类
+     */
+    Class<?> target() default Class.class;
+
+    /**
+     * 是否忽略空值
+     */
+    boolean ignoreEmpty() default true;
 }

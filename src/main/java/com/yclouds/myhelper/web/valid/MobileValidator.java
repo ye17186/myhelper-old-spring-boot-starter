@@ -13,22 +13,19 @@ import lombok.extern.slf4j.Slf4j;
  * @version 2019/3/6 15:56
  */
 @Slf4j
-public class MobileValidator implements ConstraintValidator<MobileValid, String> {
+public class MobileValidator implements ConstraintValidator<Mobile, String> {
 
-    /**
-     * 手机号正则
-     */
-    private String regex = "^1[3|4|5|7|8][0-9]\\\\d{4,8}$";
 
-    private Pattern pattern = Pattern.compile(regex);
-
+    private Pattern pattern;
 
     @Override
-    public void initialize(MobileValid constraintAnnotation) {
+    public void initialize(Mobile mobile) {
+
+        pattern = Pattern.compile(mobile.pattern());
     }
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(String value, ConstraintValidatorContext context) {
 
         boolean isValid = true;
 

@@ -14,18 +14,18 @@ import lombok.extern.slf4j.Slf4j;
  * @version 2019/3/6 15:56
  */
 @Slf4j
-public class EnumValidator implements ConstraintValidator<EnumValid, String> {
+public class EnumValidator implements ConstraintValidator<Enum, String> {
 
-    private EnumValid annotation;
+    private Enum annotation;
 
     @Override
-    public void initialize(EnumValid constraintAnnotation) {
+    public void initialize(Enum constraintAnnotation) {
 
         annotation = constraintAnnotation;
     }
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(String value, ConstraintValidatorContext context) {
         boolean result = false;
 
         Class<?> cls = annotation.target();

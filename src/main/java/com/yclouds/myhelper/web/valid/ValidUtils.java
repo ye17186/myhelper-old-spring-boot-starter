@@ -46,7 +46,6 @@ public class ValidUtils {
             throw new LogicArgNoValidException(
                 violationSet.stream().map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList()));
-
         }
     }
 
