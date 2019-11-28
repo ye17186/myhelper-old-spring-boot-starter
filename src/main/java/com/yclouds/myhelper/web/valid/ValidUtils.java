@@ -37,15 +37,13 @@ public class ValidUtils {
      * @param bean 待校验的Bean对象
      * @param clz 分组Class
      * @see org.springframework.validation.annotation.Validated
-     * @see LogicArgNoValidException
+     * @see LogicMethodArgumentNotValidException
      */
     public static void valid(Object bean, Class<?>... clz) {
 
-        Set<ConstraintViolation<Object>> violationSet = validator.validate(bean, clz);
-        if (!CollectionUtils.isEmpty(violationSet)) {
-            throw new LogicArgNoValidException(
-                violationSet.stream().map(ConstraintViolation::getMessage)
-                    .collect(Collectors.toList()));
+        List<String> errors = validSilent(bean, clz);
+        if (!CollectionUtils.isEmpty(errors)) {
+            throw new LogicMethodArgumentNotValidException(errors);
         }
     }
 

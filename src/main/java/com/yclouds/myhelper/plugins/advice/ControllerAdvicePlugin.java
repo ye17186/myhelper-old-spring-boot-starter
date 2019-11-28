@@ -5,14 +5,14 @@ import com.yclouds.myhelper.exception.LogicException;
 import com.yclouds.myhelper.plugins.AbstractPlugin;
 import com.yclouds.myhelper.web.error.code.BaseEnumError;
 import com.yclouds.myhelper.web.response.ApiResp;
-import com.yclouds.myhelper.web.valid.LogicArgNoValidException;
+import com.yclouds.myhelper.web.valid.LogicMethodArgumentNotValidException;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -55,41 +55,25 @@ public class ControllerAdvicePlugin extends AbstractPlugin {
         return ApiResp.retFail(ex.getCode(), ex.getMessage(), ex.getDetail());
     }
 
-
-    /**
-     * 业务参数异常
-     * <br>该异常发生于Service层等业务逻辑中，主动调用ValidUtils进行参数校验
-     *
-     * @param request 请求对象
-     * @param ex 异常对象
-     * @return 异常信息
-     * @see com.yclouds.myhelper.web.valid.ValidUtils
-     */
-    @ExceptionHandler(LogicArgNoValidException.class)
-    @ResponseBody
-    protected ApiResp handleArgEx(HttpServletRequest request, LogicArgNoValidException ex) {
-
-        log.warn("[非法请求参数1] url: {}", request.getRequestURL());
-        return ApiResp.retFail(BaseEnumError.SYSTEM_ARGUMENT_NOT_VALID1, ex.getErrors());
-    }
-
     /**
      * 参数绑定异常或者参数检验失败异常
-     * <br>该异常发生在Controller层参数绑定时
+     * <br>该异常发生在Controller层参数绑定或者手动调用{@link com.yclouds.myhelper.web.valid.ValidUtils}时
      *
      * @param request 请求对象
      * @param ex 异常对象
      * @return 参数不合法
      * @see org.springframework.validation.annotation.Validated
      * @see javax.validation.Valid
+     * @see com.yclouds.myhelper.web.valid.ValidUtils
      */
-    @ExceptionHandler({BindException.class, MethodArgumentNotValidException.class})
+    @ExceptionHandler({BindException.class, MethodArgumentNotValidException.class,
+        LogicMethodArgumentNotValidException.class})
     @ResponseBody
     protected ApiResp handleArgEx(HttpServletRequest request, Exception ex) {
 
         List<String> list = collectErrorMsg(ex);
-        log.warn("[非法请求参数2] url: {}", request.getRequestURL());
-        return ApiResp.retFail(BaseEnumError.SYSTEM_ARGUMENT_NOT_VALID2, list);
+        log.warn("[非法请求参数] url: {}", request.getRequestURL());
+        return ApiResp.retFail(BaseEnumError.SYSTEM_ARGUMENT_NOT_VALID, list);
     }
 
     /**
@@ -104,7 +88,8 @@ public class ControllerAdvicePlugin extends AbstractPlugin {
         HttpRequestMethodNotSupportedException ex) {
 
         String method = request.getMethod();
-        log.warn("[请求方法不支持] url: {}，method: {}", request.getRequestURL(), method);
+        log.warn("[{}请求方法不支持] url: {}, method: {}", ex.getMethod(), request.getRequestURL(),
+            method);
 
         return ApiResp.retFail(BaseEnumError.SYSTEM_REQUEST_METHOD_NOT_SUPPORTED, method);
     }
@@ -128,7 +113,7 @@ public class ControllerAdvicePlugin extends AbstractPlugin {
     /**
      * 最后兜底的异常处理
      * <br>
-     * 由请求接口不存在产生的404异常，不会走到这里，所有另外定义了YErrorHandler来处理这类异常
+     * 由请求接口不存在产生的404异常，不会走到这里，所以另外定义了YErrorHandler来处理这类异常
      *
      * @param request Http请求
      * @param ex 异常对象
@@ -153,15 +138,20 @@ public class ControllerAdvicePlugin extends AbstractPlugin {
 
         List<String> errors = Lists.newArrayList();
         if (ex instanceof BindException) {
+
             BindException e1 = ((BindException) ex);
             if (e1.hasErrors()) {
                 errors = buildErrorMsg(e1.getFieldErrors());
             }
         } else if (ex instanceof MethodArgumentNotValidException) {
+
             MethodArgumentNotValidException e2 = (MethodArgumentNotValidException) ex;
             if (e2.getBindingResult().hasFieldErrors()) {
                 errors = buildErrorMsg(e2.getBindingResult().getFieldErrors());
             }
+        } else if (ex instanceof LogicMethodArgumentNotValidException) {
+
+            errors = ((LogicMethodArgumentNotValidException) ex).getErrors();
         }
 
         return errors;
@@ -174,11 +164,6 @@ public class ControllerAdvicePlugin extends AbstractPlugin {
      * @return 错误信息列表
      */
     private List<String> buildErrorMsg(List<FieldError> errors) {
-        List<String> msg = Lists.newArrayList();
-        if (!ObjectUtils.isEmpty(errors)) {
-            errors.forEach(
-                item -> msg.add(item.getDefaultMessage()));
-        }
-        return msg;
+        return errors.stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
     }
 }

@@ -10,19 +10,13 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class LogicArgNoValidException extends RuntimeException {
+public class LogicMethodArgumentNotValidException extends RuntimeException {
 
     private static final long serialVersionUID = -615790386614615127L;
     private List<String> errors;
 
-    LogicArgNoValidException(List<String> errors) {
-        super("Args No Valid.");
-        this.errors = errors;
-    }
-
-    LogicArgNoValidException(List<String> errors, String message) {
-
-        super(message);
+    LogicMethodArgumentNotValidException(List<String> errors) {
+        super("Method Argument Not Valid Exception");
         this.errors = errors;
     }
 }
