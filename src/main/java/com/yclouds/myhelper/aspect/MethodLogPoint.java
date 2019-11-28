@@ -36,8 +36,8 @@ public @interface MethodLogPoint {
     /**
      *
      * 是否包含Http请求相关消息
-     * <p>如果{@code includeRequest}为true，日志中会记录发送本次Http请求客户端的相关信息</p>
+     * <p>如果{@code includeHttpRequest}为true，日志中会记录发送本次Http请求客户端的相关信息</p>
      */
-    boolean includeRequest() default false;
+    boolean includeHttpRequest() default false;
 
 }

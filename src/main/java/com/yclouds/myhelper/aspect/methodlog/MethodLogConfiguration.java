@@ -65,7 +65,7 @@ public class MethodLogConfiguration extends AbstractMethodLogConfiguration {
         Throwable ex) {
 
         // 需要记录发起Http请求信息
-        if (point.includeRequest()) {
+        if (point.includeHttpRequest()) {
 
             HttpServletRequest request = RequestUtils.getRequest();
 
