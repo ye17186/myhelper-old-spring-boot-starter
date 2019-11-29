@@ -1,6 +1,7 @@
 package com.yclouds.myhelper.web.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.yclouds.myhelper.utils.JsonUtils;
 import com.yclouds.myhelper.web.error.code.BaseEnumError;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -123,5 +124,10 @@ public class ApiResp<T> implements Serializable {
         response.setMsg(msg);
         response.setData(data);
         return response;
+    }
+
+    @Override
+    public String toString() {
+        return JsonUtils.obj2Json(this);
     }
 }

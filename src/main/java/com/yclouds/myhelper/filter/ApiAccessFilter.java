@@ -28,11 +28,14 @@ public class ApiAccessFilter implements Filter {
         FilterChain filterChain) throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
-        String requestId = IdGenUtils.nextIdStr();
+        Object requestId = httpRequest.getAttribute(RequestConsts.REQUEST_ID);
+
+        if (requestId == null) {
+            requestId = IdGenUtils.nextIdStr(); // 重新生成一个RequestId
+            httpRequest.setAttribute(RequestConsts.REQUEST_ID, requestId);
+        }
+
         long start = System.currentTimeMillis();
-
-        httpRequest.setAttribute(RequestConsts.REQUEST_ID, requestId);
-
         log.info("[MyHelper API] === start === ID: {}, URI: {}, Method: {}, ClientIP: {}",
             requestId, httpRequest.getRequestURL().toString(), httpRequest.getMethod(),
             RequestUtils.getIP(httpRequest));

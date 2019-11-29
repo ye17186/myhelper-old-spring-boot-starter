@@ -1,6 +1,7 @@
 package com.yclouds.myhelper.utils;
 
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.lang.Nullable;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -19,6 +20,7 @@ public class RequestUtils {
      *
      * @return Request对象
      */
+    @Nullable
     public static HttpServletRequest getRequest() {
         RequestAttributes ra = RequestContextHolder.getRequestAttributes();
         ServletRequestAttributes sra = (ServletRequestAttributes) ra;

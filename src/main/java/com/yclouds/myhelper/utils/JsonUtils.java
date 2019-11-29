@@ -85,7 +85,7 @@ public class JsonUtils {
      * @param type 对象类型
      * @param <T> 泛型
      */
-    public static <T> T json2Obj(String json, TypeReference type) {
+    public static <T> T json2Obj(String json, TypeReference<T> type) {
 
         return json2Obj(json, null, type);
     }
@@ -103,7 +103,7 @@ public class JsonUtils {
      * @param type 对象类型
      * @param <T> 泛型
      */
-    private static <T> T json2Obj(String json, Class<T> clazz, TypeReference type) {
+    private static <T> T json2Obj(String json, Class<T> clazz, TypeReference<T> type) {
 
         T obj = null;
         if (!StringUtils.isEmpty(json)) {

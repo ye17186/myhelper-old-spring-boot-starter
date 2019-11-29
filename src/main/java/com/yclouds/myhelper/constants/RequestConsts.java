@@ -8,6 +8,6 @@ package com.yclouds.myhelper.constants;
  */
 public class RequestConsts {
 
-    public static final String REQUEST_ID = "MyHelper-request-id";
+    public static final String REQUEST_ID = "MyHelper-Request-Id";
 
 }
