@@ -32,7 +32,7 @@ public class BaseInterceptor implements HandlerInterceptor {
         String origin = request.getHeader(HttpHeaders.ORIGIN);
         response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, origin);
         response.setCharacterEncoding(Charsets.UTF_8.name());
-        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.getWriter().write(JsonUtils.obj2Json(resp));
     }
 }
