@@ -7,9 +7,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * 基于Token的接口安全插件
@@ -20,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableConfigurationProperties(TokenProperties.class)
 @ConditionalOnProperty(prefix = "myhelper.plugins.token", name = "enabled", havingValue = "true")
-public class TokenPlugin extends AbstractPlugin implements WebMvcConfigurer {
+public class TokenPlugin extends AbstractPlugin {
 
     public TokenPlugin() {
         printLog();
@@ -32,21 +29,6 @@ public class TokenPlugin extends AbstractPlugin implements WebMvcConfigurer {
     @Bean
     @ConditionalOnMissingBean
     public TokenService tokenService() {
-        return new TokenService(properties.getTimeout(), properties.getTokenPrefix());
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        TokenInterceptor tokenInterceptor = new TokenInterceptor();
-        tokenInterceptor.setProperties(properties);
-        tokenInterceptor.setTokenService(tokenService());
-
-        InterceptorRegistration registration = registry.addInterceptor(tokenInterceptor);
-        if (properties.getPathPatterns() != null) {
-            registration.addPathPatterns(properties.getPathPatterns());
-        }
-        if (properties.getExcludePathPatterns() != null) {
-            registration.excludePathPatterns(properties.getExcludePathPatterns());
-        }
+        return new TokenService(properties);
     }
 }

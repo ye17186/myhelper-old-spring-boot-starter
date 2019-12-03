@@ -35,12 +35,12 @@ public class TokenProperties {
     /**
      * 基于Redis的token有效期
      */
-    private long timeout;
+    private long timeout = 7 * 24 * 3600;
 
     /**
      * 基于Redis的token key前缀
      */
-    private String tokenPrefix;
+    private String tokenPrefix = "TOKEN";
 
     /**
      * 签名算法的密钥

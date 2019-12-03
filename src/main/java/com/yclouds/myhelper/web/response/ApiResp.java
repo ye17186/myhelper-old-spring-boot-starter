@@ -2,7 +2,7 @@ package com.yclouds.myhelper.web.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.yclouds.myhelper.utils.JsonUtils;
-import com.yclouds.myhelper.web.error.code.BaseEnumError;
+import com.yclouds.myhelper.web.error.code.IEnumError;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
@@ -14,7 +14,6 @@ import lombok.Data;
  * @author ye17186
  * @version 2019/2/15 14:40
  */
-@SuppressWarnings("unused")
 @ApiModel(description = "接口统一响应体")
 @Data
 public class ApiResp<T> implements Serializable {
@@ -83,7 +82,7 @@ public class ApiResp<T> implements Serializable {
      *
      * @param error 错误类型
      */
-    public static ApiResp retFail(BaseEnumError error) {
+    public static ApiResp retFail(IEnumError error) {
         return retFail(error.getCode(), error.getMsg());
     }
 
@@ -93,7 +92,7 @@ public class ApiResp<T> implements Serializable {
      * @param error 错误类型
      * @param data 详细错误信息
      */
-    public static <T> ApiResp<T> retFail(BaseEnumError error, T data) {
+    public static <T> ApiResp<T> retFail(IEnumError error, T data) {
         return retFail(error.getCode(), error.getMsg(), data);
     }
 

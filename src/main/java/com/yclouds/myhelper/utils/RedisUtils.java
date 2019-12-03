@@ -19,7 +19,9 @@ public class RedisUtils {
     private RedisUtils() {
     }
 
-    private static final String REDIS_LOCK_PREFIX = "redisLock:";
+    public static final String KEY_SEPARATOR = ":";
+    private static final String REDIS_LOCK_PREFIX = "RedisLock" + KEY_SEPARATOR;
+
 
     @SuppressWarnings("unchecked")
     public static RedisTemplate<String, Object> redisTemplate = SpringUtils

@@ -37,7 +37,7 @@ pom.xml加入MyHelper依赖
 <dependency>
   <groupId>com.yclouds</groupId>
   <artifactId>myhelper-spring-boot-starter</artifactId>
-  <version>1.0.0</version>
+  <version>2.1.1</version>
 </dependency>
 ```
 application.yml开启指定插件

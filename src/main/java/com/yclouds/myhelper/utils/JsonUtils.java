@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.yclouds.myhelper.context.SpringUtils;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import lombok.extern.slf4j.Slf4j;
@@ -25,22 +26,26 @@ public class JsonUtils {
     private JsonUtils() {
     }
 
-    private static ObjectMapper om = new ObjectMapper();
+    private static ObjectMapper om;
 
     static {
 
-        // 对象的所有字段全部列入，还是其他的选项，可以忽略null等
-        om.setSerializationInclusion(Include.ALWAYS);
-        // 设置Date类型的序列化及反序列化格式
-        om.setDateFormat(new SimpleDateFormat(DateUtils.PATTERN_DATETIME_01));
+        om = SpringUtils.getBean(ObjectMapper.class);
+        if (om == null) {
+            om = new ObjectMapper();
+            // 对象的所有字段全部列入，还是其他的选项，可以忽略null等
+            om.setSerializationInclusion(Include.ALWAYS);
+            // 设置Date类型的序列化及反序列化格式
+            om.setDateFormat(new SimpleDateFormat(DateUtils.PATTERN_DATETIME_01));
 
-        // 忽略空Bean转json的错误
-        om.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        // 忽略未知属性，防止json字符串中存在，java对象中不存在对应属性的情况出现错误
-        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            // 忽略空Bean转json的错误
+            om.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+            // 忽略未知属性，防止json字符串中存在，java对象中不存在对应属性的情况出现错误
+            om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        // 注册一个时间序列化及反序列化的处理模块，用于解决jdk8中localDateTime等的序列化问题
-        om.registerModule(new JavaTimeModule());
+            // 注册一个时间序列化及反序列化的处理模块，用于解决jdk8中localDateTime等的序列化问题
+            om.registerModule(new JavaTimeModule());
+        }
     }
 
     /**
