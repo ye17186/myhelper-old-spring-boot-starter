@@ -3,7 +3,7 @@ package com.yclouds.myhelper.constants;
 /**
  * ZuulFilterType
  *
- * @author yemeng-lhq
+ * @author ye17186
  * @version 2019/12/3 12:58
  */
 public enum ZuulFilterType {
