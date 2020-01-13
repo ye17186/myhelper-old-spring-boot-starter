@@ -21,5 +21,4 @@ public class SpringContextHandler implements ApplicationContextAware {
         SpringUtils.initContext(applicationContext);
         log.info("Spring Context自动初始化完成，可以通过SpringUtils类提供的方法来获取Bean.");
     }
-
 }

@@ -10,7 +10,6 @@ import com.yclouds.myhelper.utils.RedisUtils;
  */
 public class RedisLock implements DistributedLock {
 
-
     @Override
     public boolean lock(String key, int time) {
 

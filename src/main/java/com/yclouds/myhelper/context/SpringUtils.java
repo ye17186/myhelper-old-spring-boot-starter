@@ -10,7 +10,6 @@ import org.springframework.context.ApplicationContext;
  * @version 2019/2/22 11:28
  */
 @Slf4j
-@SuppressWarnings("unused")
 public class SpringUtils {
 
     private SpringUtils() {

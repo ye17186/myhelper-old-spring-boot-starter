@@ -69,5 +69,4 @@ public abstract class AbstractFeignFallback<Client> implements FallbackFactory<C
         return ApiResp.retFail(BaseEnumError.SERVICE_DOWN.getCode(),
             BaseEnumError.SERVICE_DOWN.getMsg().replace("${serviceId}", serviceId));
     }
-
 }
