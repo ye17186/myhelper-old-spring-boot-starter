@@ -142,7 +142,7 @@ public class TokenService {
             .signature(model.getToken(), model.getTimestamp(), model.getNonce(),
                 properties.getSecretKey()))) { // 校验签名
             return BaseEnumError.SYSTEM_TOKEN_INVALID_02;
-        } else if (now - Long.valueOf(model.getTimestamp())
+        } else if (now - Long.parseLong(model.getTimestamp())
             > properties.getValidDuration() * 1000) { // 校验时间戳
             return BaseEnumError.SYSTEM_TOKEN_INVALID_03;
         } else if (!RedisUtils.setNx("NONCE:" + model.getNonce(), "NONCE:" + model.getNonce(),

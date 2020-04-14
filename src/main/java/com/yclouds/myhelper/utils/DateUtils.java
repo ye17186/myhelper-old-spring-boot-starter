@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 /**
@@ -181,5 +182,28 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      */
     public static long betweenByMillis(LocalDateTime start, LocalDateTime end) {
         return between(start, end).toMillis();
+    }
+
+    /**
+     * 获取当前的年龄
+     *
+     * @param birthDay 出生日期
+     * @return 年龄
+     */
+    public static int getAge(LocalDate birthDay) {
+        LocalDate today = LocalDate.now();
+        return (int) ChronoUnit.YEARS.between(birthDay, today);
+    }
+
+    /**
+     * 获取指定时间时的年龄
+     *
+     * @param birthDay 出生日期
+     * @param target 指定日期
+     * @return 年龄
+     */
+    public static int getAge(LocalDate birthDay, LocalDate target) {
+        LocalDate today = LocalDate.now();
+        return (int) ChronoUnit.YEARS.between(birthDay, target);
     }
 }
